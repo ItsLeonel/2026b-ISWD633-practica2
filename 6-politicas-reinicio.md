@@ -41,5 +41,6 @@ docker run -d --name prueba-on-failure --restart on-failure:3 reinicio-on-failur
 - always: el contenedor se reinició automáticamente cada vez que terminó el script.
 - unless-stopped: el contenedor se reinició automáticamente, pero permaneció detenido después de ejecutar docker stop.
 - on-failure: el contenedor realizó tres reinicios automáticos y después quedó detenido. Resultado: 1 3 exited.
+  
 Finalmente se comprobó que cada política controla de manera diferente el reinicio de los contenedores Docker, permitiendo decidir si se reinician automáticamente, si respetan la detención manual o si limitan los intentos ante un error.
 
