@@ -51,19 +51,26 @@ docker build -t <nombre imagen>:<tag> .
 
  
 ### Ejecutar el archivo Dockerfile y construir una imagen en la versión 1.0
+#### con el comando: docker build -t apache-practica:1.0 .
 No olvides verificar en qué directorio se encuentra el archivo Dockerfile
 ```
 
 ```
 
 **¿Cuántos pasos se han ejecutado?**
-# RESPONDER 
+#### Se ejecutaron 5 pasos principales durante la construcción de la imagen:
+1. FROM centos:7: utiliza la imagen base de CentOS 7.
+2. RUN sed ...: configura los repositorios de CentOS.
+3. RUN yum -y update: actualiza los paquetes.
+4. RUN yum -y install httpd: instala el servidor web Apache.
+5. COPY ./web /var/www/html: copia los archivos de la página web al directorio de Apache.
 
 ### Inspeccionar la imagen creada
-# COMPLETAR CON UNA CAPTURA
+![Imagen](InspeccionDeImagen.png)
 
 **Modificar el archivo index.html para incluir su nombre y luego crear una nueva versión de la imagen anterior**
 **¿Cuántos pasos se han ejecutado? ¿Observa algo diferente en la creación de la imagen**
+#### Se ejecutaron 5 pasos principales del Dockerfile. Sin embargo, los pasos 2, 3 y 4 se reutilizaron desde la caché  mientras que el paso 5 se ejecutó nuevamente porque se modificó el archivo index.html y sí efectivamente la construcción fue mucho más rápida porque Docker reutilizó las capas almacenadas en caché de la versión anterior. Únicamente tuvo que copiar nuevamente los archivos de la página web y generar la nueva imagen.
 
 ## Mecanismo de caché
 Docker usa un mecanismo de caché cuando crea imágenes para acelerar el proceso de construcción y evitar la repetición de pasos que no han cambiado. Cada instrucción en un Dockerfile crea una capa en la imagen final. Docker intenta reutilizar las capas de una construcción anterior si no han cambiado, lo que reduce significativamente el tiempo de construcción.
@@ -79,10 +86,10 @@ Docker usa un mecanismo de caché cuando crea imágenes para acelerar el proceso
 ```
 
 ### ¿Con que puerto host se está realizando el mapeo?
-# COMPLETAR CON LA RESPUESTA
+#### El mapeo se realiza mediante el puerto 32768 del host, que se conecta con el puerto 80 del contenedor, donde se ejecuta el servidor web Apache.
 
 **¿Qué es una imagen huérfana?**
-# COMPLETAR CON LA RESPUESTA
+#### Una imagen huérfana es una imagen que no tiene una etiqueta asociada y que no está referenciada por ningún contenedor. Se puede identificar mediante docker images -f "dangling=true" y eliminar con docker image prune.
 
 ### Identificar imágenes huérfanas
 ```
